@@ -1,0 +1,6 @@
+target/
+.env
+node_modules/
+*.log
+.vscode/
+.idea/
