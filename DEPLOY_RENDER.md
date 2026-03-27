@@ -9,7 +9,7 @@ This project is ready for a first deployment on Render using:
 
 Set these in the Render dashboard for the web service:
 
-- `SERVER_PORT`
+- `PORT`
 - `DB_URL`
 - `DB_USERNAME`
 - `DB_PASSWORD`
@@ -20,7 +20,7 @@ Set these in the Render dashboard for the web service:
 Recommended values:
 
 ```env
-SERVER_PORT=10000
+PORT=10000
 DB_URL=jdbc:postgresql://your-render-postgres-host:5432/your_database
 DB_USERNAME=your_database_user
 DB_PASSWORD=your_database_password
@@ -42,6 +42,48 @@ Use Maven Wrapper so Render builds with the project-pinned Maven version:
 ```bash
 java -jar target/movie-recommendation-0.0.1-SNAPSHOT.jar
 ```
+
+## Docker Deployment On Render
+
+This project also supports Docker-based deployment on Render.
+
+### Docker runtime behavior
+
+- Render will build the image from the `Dockerfile`
+- the Dockerfile performs a multi-stage Maven build
+- the final image runs the packaged Spring Boot jar with:
+
+```bash
+java -jar app.jar
+```
+
+### Port behavior
+
+The application is configured with:
+
+```properties
+server.port=${PORT:8080}
+```
+
+That means Render can inject its runtime `PORT` variable automatically, and the container will bind to the correct port.
+
+### Docker build/start on Render
+
+When using Docker on Render:
+
+- Render uses the repository `Dockerfile`
+- you do not need separate Maven build or Java start commands in Render
+- the image build and runtime are controlled by the Dockerfile
+
+### Required env vars for Docker deployment
+
+- `PORT`
+- `DB_URL`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+- `TMDB_READ_ACCESS_TOKEN`
+- `JPA_DDL_AUTO`
+- `SHOW_SQL`
 
 ## Render Setup Steps
 
@@ -82,6 +124,7 @@ After the first successful deploy:
 ## Notes
 
 - The application already reads Render-friendly environment variables from `application.properties`.
+- The application now reads the runtime port from `PORT`, which is compatible with Render Docker deployment.
 - Maven Wrapper support is included through:
   - `mvnw`
   - `mvnw.cmd`
