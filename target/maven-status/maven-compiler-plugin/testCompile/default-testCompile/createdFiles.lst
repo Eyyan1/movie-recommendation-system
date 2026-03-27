@@ -1,7 +1,0 @@
-com\example\movierec\service\DefaultRecommendationServiceTest.class
-com\example\movierec\controller\RegistrationControllerWebTest.class
-com\example\movierec\controller\MovieControllerWebTest.class
-com\example\movierec\service\DefaultRatingServiceTest.class
-com\example\movierec\service\UserRegistrationServiceTest.class
-com\example\movierec\package-info.class
-com\example\movierec\controller\AdminMovieControllerWebTest.class
