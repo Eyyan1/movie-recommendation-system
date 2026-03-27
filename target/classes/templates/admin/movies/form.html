@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: head(${createMode ? 'Add Movie' : 'Edit Movie'})}"></th:block>
+</head>
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: flash-messages}"></div>
+
+<main class="container py-4">
+    <a class="btn btn-link ps-0 mb-3" th:href="@{/admin/movies}">Back to admin movies</a>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+            <h1 class="h3 mb-4" th:text="${createMode ? 'Create Movie' : 'Edit Movie'}">Movie Form</h1>
+
+            <form th:action="${createMode} ? @{/admin/movies} : @{/admin/movies/{id}(id=${movieId})}"
+                  th:object="${movieForm}"
+                  method="post"
+                  class="row g-3">
+                <div class="col-12">
+                    <label for="title" class="form-label">Title</label>
+                    <input id="title" type="text" th:field="*{title}" class="form-control">
+                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                </div>
+
+                <div class="col-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" th:field="*{description}" class="form-control" rows="5"></textarea>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="releaseDate" class="form-label">Release Date</label>
+                    <input id="releaseDate" type="date" th:field="*{releaseDate}" class="form-control">
+                </div>
+
+                <div class="col-md-8">
+                    <label for="posterUrl" class="form-label">Poster URL</label>
+                    <input id="posterUrl" type="url" th:field="*{posterUrl}" class="form-control">
+                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('posterUrl')}" th:errors="*{posterUrl}"></div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="averageRating" class="form-label">Average Rating</label>
+                    <input id="averageRating" type="number" step="0.01" min="0" th:field="*{averageRating}" class="form-control">
+                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('averageRating')}" th:errors="*{averageRating}"></div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="popularity" class="form-label">Popularity</label>
+                    <input id="popularity" type="number" step="0.01" min="0" th:field="*{popularity}" class="form-control">
+                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('popularity')}" th:errors="*{popularity}"></div>
+                </div>
+
+                <div class="col-12">
+                    <label for="genreIds" class="form-label">Genres</label>
+                    <select id="genreIds" th:field="*{genreIds}" class="form-select" multiple size="8">
+                        <option th:each="genre : ${genres}"
+                                th:value="${genre.id}"
+                                th:text="${genre.name}">
+                        </option>
+                    </select>
+                    <div class="form-text">Hold Ctrl or Command to select multiple genres.</div>
+                </div>
+
+                <div class="col-12 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary" th:text="${createMode ? 'Create Movie' : 'Save Changes'}">Save</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/admin/movies}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

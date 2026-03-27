@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: head('Access Denied')}"></th:block>
+</head>
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: flash-messages}"></div>
+
+<main class="container py-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-5 text-center">
+            <h1 class="display-6 mb-3">Access Denied</h1>
+            <p class="text-secondary mb-4">
+                You do not have permission to access this page.
+            </p>
+            <div class="d-flex justify-content-center gap-2">
+                <a class="btn btn-primary" th:href="@{/}">Go Home</a>
+                <a class="btn btn-outline-secondary" th:href="@{/movies}">Browse Movies</a>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="~{fragments/layout :: head('Admin Movies')}"></th:block>
+</head>
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<div th:replace="~{fragments/layout :: flash-messages}"></div>
+
+<main class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-1">Admin Movie Management</h1>
+            <p class="text-secondary mb-0">Create, edit, and remove locally managed movies.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/admin/movies/new}">Add Movie</a>
+    </div>
+
+    <div class="alert alert-info" th:if="${#lists.isEmpty(movies)}">
+        No movies are available yet. Import from TMDb or create one manually.
+    </div>
+
+    <div class="card shadow-sm border-0" th:if="${not #lists.isEmpty(movies)}">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Release Date</th>
+                    <th>Average Rating</th>
+                    <th>Genres</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="movie : ${movies}">
+                    <td>
+                        <div class="fw-semibold" th:text="${movie.title}">Movie Title</div>
+                        <div class="text-secondary small" th:text="${movie.tmdbId != null ? 'TMDb ID: ' + movie.tmdbId : 'Manual movie'}">Manual movie</div>
+                    </td>
+                    <td th:text="${movie.releaseDate != null ? movie.releaseDate : 'Unknown'}">Unknown</td>
+                    <td th:text="${movie.averageRating != null ? movie.averageRating : 'N/A'}">N/A</td>
+                    <td>
+                        <span class="badge text-bg-dark me-1 mb-1"
+                              th:each="genre : ${movie.genres}"
+                              th:text="${genre.name}">Genre</span>
+                    </td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-primary me-2"
+                           th:href="@{/admin/movies/{id}/edit(id=${movie.id})}">
+                            Edit
+                        </a>
+                        <form th:action="@{/admin/movies/{id}/delete(id=${movie.id})}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Delete this movie?');">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

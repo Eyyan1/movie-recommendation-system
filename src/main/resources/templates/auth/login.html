@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: head('Login')}"></th:block>
+</head>
+<body class="bg-light">
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h1 class="h3 mb-4 text-center">Login</h1>
+
+                    <div th:replace="~{fragments/layout :: flash-messages}"></div>
+                    <div th:if="${loginError}" class="alert alert-danger">
+                        Invalid username/email or password.
+                    </div>
+                    <div th:if="${logoutSuccess}" class="alert alert-success">
+                        You have been logged out successfully.
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username or Email</label>
+                            <input id="username" name="username" type="text" class="form-control" placeholder="Enter username or email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input id="password" name="password" type="password" class="form-control" placeholder="Enter password">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+
+                    <p class="text-center mt-3 mb-0">
+                        Don’t have an account?
+                        <a th:href="@{/register}">Register here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
