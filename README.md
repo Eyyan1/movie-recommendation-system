@@ -271,30 +271,6 @@ After updating the role, log out and log back in.
 - delete movies
 - continue using TMDb import as a separate catalog population flow
 
-## Screenshots
-
-Add screenshots here later for portfolio presentation.
-
-Suggested screenshots:
-
-- Home page
-- Movie browse page
-- Movie detail page
-- Recommendations page
-- My Ratings page
-- Admin movie management page
-
-Example placeholder layout:
-
-```text
-docs/screenshots/home.png
-docs/screenshots/movies-list.png
-docs/screenshots/movie-detail.png
-docs/screenshots/recommendations.png
-docs/screenshots/my-ratings.png
-docs/screenshots/admin-movies.png
-```
-
 ## Deployment (Render)
 
 This project is suitable for a first deployment on Render with a managed PostgreSQL database.
